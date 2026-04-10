@@ -1,0 +1,13 @@
+{
+  "name": "react-native-best-practices",
+  "description": "React Native performance, Metro bundler optimization, FlatList/ScrollView guidance, Expo vs bare workflow decision matrix, and React Navigation patterns for Claude Code.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Petro Nazarenko",
+    "email": "petro@claudemarketplaces.com"
+  },
+  "homepage": "https://github.com/petro-nazarenko/mobile-skills",
+  "repository": "https://github.com/petro-nazarenko/mobile-skills",
+  "license": "MIT",
+  "keywords": ["react-native", "expo", "metro", "performance", "navigation", "mobile", "flatlist", "bundler"]
+}

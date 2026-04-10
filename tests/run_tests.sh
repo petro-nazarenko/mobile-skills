@@ -5,6 +5,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PLUGIN_DIR="$(dirname "$SCRIPT_DIR")"
 EVALS_FILE="$SCRIPT_DIR/evals.json"
 
 PASS=0
@@ -55,7 +56,7 @@ for i in $(seq 0 $((NUM_TESTS - 1))); do
   fi
 
   # Call claude CLI
-  RESPONSE=$(claude -p "$PROMPT" --allowedTools Read 2>/dev/null || echo "")
+  RESPONSE=$(claude -p "$PROMPT" --allowedTools Read --plugin-dir "$PLUGIN_DIR" 2>/dev/null || echo "")
 
   if [ -z "$RESPONSE" ]; then
     echo -e "${RED}FAIL${NC} — No response from claude"
@@ -68,7 +69,9 @@ for i in $(seq 0 $((NUM_TESTS - 1))); do
   FAILED_ASSERTIONS=()
 
   while IFS= read -r assertion; do
-    if ! echo "$RESPONSE" | grep -qiE "$assertion"; then
+    # Convert \| to | so grep -E treats it as alternation (not literal pipe)
+    clean="${assertion//\\|/|}"
+    if ! echo "$RESPONSE" | grep -qiE "$clean"; then
       ALL_PASS=false
       FAILED_ASSERTIONS+=("$assertion")
     fi

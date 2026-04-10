@@ -25,8 +25,8 @@
     "expected_triggers": ["skill: react-native-best-practices"],
     "assertions": [
       "Platform\\.OS\\|Platform\\.select",
-      "elevation\\|shadow",
-      "grep\\|audit"
+      "elevation\\|shadow\\|SafeAreaView\\|StatusBar\\|PixelRatio",
+      "grep\\|audit\\|check\\|inconsistent"
     ]
   },
   {
@@ -84,7 +84,7 @@
     "prompt": "I'm using Expo managed workflow but need to add a native Bluetooth library that requires custom native code. How do I migrate to bare workflow?",
     "expected_triggers": ["skill: react-native-best-practices"],
     "assertions": [
-      "prebuild\\|expo prebuild",
+      "prebuild\\|expo prebuild\\|eject\\|expo eject",
       "bare\\|eject",
       "ios\\|android\\|native"
     ]
