@@ -60,6 +60,45 @@ https://petro-nazarenko.github.io/mobile-skills
 
 ---
 
+## Supported Platforms
+
+Check all that apply (this plugin is pure Markdown/skills — no native deps, works everywhere):
+
+**Surfaces**
+```
+[x] CLI (claude terminal)
+[x] Desktop app — macOS
+[x] Desktop app — Windows
+[x] Web app (claude.ai/code)
+[x] VS Code extension
+[x] JetBrains extension
+```
+
+---
+
+## License and Legal
+
+**License type**
+```
+MIT
+```
+
+**Privacy policy URL**
+```
+https://petro-nazarenko.github.io/mobile-skills/privacy.html
+```
+
+---
+
+## Contact Information
+
+**Email address**
+```
+petro@claudemarketplaces.com
+```
+
+---
+
 ## Example Use Cases
 
 **Metro bundler optimization**

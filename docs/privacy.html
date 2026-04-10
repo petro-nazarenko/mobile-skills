@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — react-native-best-practices</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f1117; --surface: #181c27; --border: #2a2f42;
+      --accent: #cc785c; --text: #e2e8f0; --muted: #8892a4; --radius: 10px;
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 16px; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    nav { border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 56px; background: var(--bg); }
+    .nav-logo { font-weight: 700; font-size: 0.95rem; color: var(--text); }
+    .nav-logo span { color: var(--accent); }
+    main { max-width: 680px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+    h1 { font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .effective { font-size: 0.85rem; color: var(--muted); margin-bottom: 3rem; }
+    h2 { font-size: 1.1rem; font-weight: 700; margin: 2.5rem 0 0.75rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); }
+    p { color: var(--muted); margin-bottom: 0.75rem; }
+    ul { color: var(--muted); padding-left: 1.5rem; margin-bottom: 0.75rem; }
+    li { margin-bottom: 0.3rem; }
+    .highlight-box { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius); padding: 1rem 1.25rem; margin: 1.5rem 0; }
+    .highlight-box p { margin: 0; font-size: 0.95rem; }
+    footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-size: 0.82rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo"><a href="index.html" style="color:inherit">react-native-best-practices <span>plugin</span></a></div>
+</nav>
+
+<main>
+  <h1>Privacy Policy</h1>
+  <p class="effective">Effective date: April 10, 2026 &bull; Plugin version: 1.0.0</p>
+
+  <div class="highlight-box">
+    <p><strong>Short version:</strong> This plugin collects no data. It contains only static Markdown skill files that run locally inside Claude Code on your machine. Nothing is transmitted to any external server by this plugin.</p>
+  </div>
+
+  <h2>1. What this plugin is</h2>
+  <p>
+    <strong>react-native-best-practices</strong> is a Claude Code plugin distributed via the
+    <code>petro-nazarenko/mobile-skills</code> marketplace. It consists of:
+  </p>
+  <ul>
+    <li>A <code>SKILL.md</code> file defining the <code>/react-native-best-practices</code> skill</li>
+    <li>Reference Markdown files (Metro, FlatList, Expo, Navigation, Platform)</li>
+    <li>A <code>plugin.json</code> manifest</li>
+  </ul>
+  <p>There is no executable code, no server, no telemetry, and no network calls made by this plugin.</p>
+
+  <h2>2. Data we collect</h2>
+  <p>We collect <strong>no data of any kind</strong>. Specifically:</p>
+  <ul>
+    <li>No personal information</li>
+    <li>No usage analytics or telemetry</li>
+    <li>No code or prompts from your projects</li>
+    <li>No crash reports or logs</li>
+    <li>No cookies or tracking identifiers</li>
+  </ul>
+
+  <h2>3. How the plugin operates</h2>
+  <p>
+    When you invoke <code>/react-native-best-practices</code>, Claude Code reads the local
+    <code>SKILL.md</code> and reference files from your plugin cache
+    (<code>~/.claude/plugins/cache/</code>) and passes their contents to the Claude model
+    as part of your conversation context. This happens entirely within your Claude Code
+    session under Anthropic's standard data handling — this plugin adds no additional data
+    processing.
+  </p>
+
+  <h2>4. Third-party services</h2>
+  <p>
+    This plugin does not integrate with, call, or transmit data to any third-party service.
+    Your use of Claude Code itself is governed by
+    <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">Anthropic's Privacy Policy</a>.
+  </p>
+
+  <h2>5. GitHub hosting</h2>
+  <p>
+    The plugin source code is hosted on GitHub at
+    <a href="https://github.com/petro-nazarenko/mobile-skills">petro-nazarenko/mobile-skills</a>.
+    Visiting that repository is subject to
+    <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">GitHub's Privacy Statement</a>.
+  </p>
+
+  <h2>6. Children's privacy</h2>
+  <p>This plugin is a developer tool not directed at children under 13. We do not knowingly collect information from children.</p>
+
+  <h2>7. Changes to this policy</h2>
+  <p>
+    If this policy changes, the updated version will be published at this URL with a new effective date.
+    Because no data is collected, no material changes are anticipated.
+  </p>
+
+  <h2>8. Contact</h2>
+  <p>
+    Questions about this privacy policy? Email:
+    <a href="mailto:petro@claudemarketplaces.com">petro@claudemarketplaces.com</a>
+  </p>
+</main>
+
+<footer>
+  <p><a href="index.html">react-native-best-practices</a> &bull; MIT License &bull; Petro Nazarenko</p>
+</footer>
+
+</body>
+</html>
