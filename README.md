@@ -1,3 +1,15 @@
+> [!WARNING]
+> **This repo is deprecated.** It has been merged into [petro-nazarenko/claude-skills](https://github.com/petro-nazarenko/claude-skills) — a mega-bundle with 55+ checks across React Native *and* WCAG 2.2.
+>
+> **New install command:**
+> ```
+> /plugin marketplace add petro-nazarenko/claude-skills
+> /plugin install react-native-best-practices@claude-skills
+> ```
+> This repo remains functional but will not receive updates. Please migrate.
+
+---
+
 # react-native-best-practices
 
 A Claude skill for React Native performance, architecture, and platform-specific best practices.
