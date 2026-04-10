@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>react-native-best-practices — Claude Code Plugin</title>
+  <meta name="description" content="Metro bundler optimization, FlatList/ScrollView guidance, Expo vs bare workflow, and React Navigation patterns for Claude Code." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f1117;
+      --surface: #181c27;
+      --surface2: #1e2333;
+      --border: #2a2f42;
+      --accent: #cc785c;
+      --accent2: #7c6af7;
+      --text: #e2e8f0;
+      --muted: #8892a4;
+      --code-bg: #12151f;
+      --radius: 10px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 16px;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* NAV */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 10;
+    }
+    .nav-logo {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 1.5rem; font-size: 0.875rem; color: var(--muted); }
+    .nav-links a { color: var(--muted); }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+
+    /* HERO */
+    .hero {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 5rem 2rem 3rem;
+      text-align: center;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(204,120,92,0.15);
+      color: var(--accent);
+      border: 1px solid rgba(204,120,92,0.3);
+      border-radius: 99px;
+      padding: 0.25rem 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.25rem;
+    }
+    h1 .highlight { color: var(--accent); }
+    .hero-sub {
+      font-size: 1.125rem;
+      color: var(--muted);
+      max-width: 580px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .install-box {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.9rem;
+      max-width: 100%;
+      overflow-x: auto;
+    }
+    .install-box .step { color: var(--muted); white-space: nowrap; }
+    .install-box code { color: #a8d8a8; white-space: nowrap; }
+    .install-box .sep { color: var(--border); }
+
+    .hero-actions {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.6rem 1.4rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: opacity 0.15s;
+    }
+    .btn:hover { opacity: 0.85; text-decoration: none; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    /* MAIN */
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 2rem 6rem;
+    }
+
+    section { margin-top: 4rem; }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin: 1.5rem 0 0.5rem;
+      color: var(--text);
+    }
+    p { color: var(--muted); margin-bottom: 0.75rem; }
+
+    /* CARDS */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+    }
+    .card-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .card h3 {
+      margin: 0 0 0.4rem;
+      font-size: 0.95rem;
+    }
+    .card p { font-size: 0.875rem; margin: 0; }
+
+    /* USE CASES */
+    .use-case {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .use-case-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    .use-case-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+    .use-case h3 { margin: 0 0 0.2rem; font-size: 0.95rem; }
+    .use-case .trigger { font-size: 0.8rem; color: var(--muted); }
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.82rem;
+      overflow-x: auto;
+      color: #a8d8a8;
+      margin-top: 0.5rem;
+    }
+
+    /* TABLE */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+    th {
+      text-align: left;
+      padding: 0.6rem 1rem;
+      background: var(--surface2);
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 0.6rem 1rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--muted);
+      vertical-align: top;
+    }
+    td:first-child { color: var(--text); font-weight: 500; }
+    tr:last-child td { border-bottom: none; }
+    .table-wrap {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    /* INSTALL STEPS */
+    .steps { display: flex; flex-direction: column; gap: 0.75rem; }
+    .step-row {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+    }
+    .step-num {
+      min-width: 28px;
+      height: 28px;
+      background: var(--accent2);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .step-body { flex: 1; }
+    .step-body p { font-size: 0.875rem; margin: 0.25rem 0 0.5rem; }
+    .step-body pre { margin: 0; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    footer a { color: var(--muted); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">react-native-best-practices <span>plugin</span></div>
+  <div class="nav-links">
+    <a href="#install">Install</a>
+    <a href="#use-cases">Use Cases</a>
+    <a href="#covers">What's Covered</a>
+    <a href="https://github.com/petro-nazarenko/mobile-skills">GitHub</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="badge">Claude Code Plugin &bull; mobile</div>
+  <h1>React Native best practices,<br/><span class="highlight">inside Claude Code</span></h1>
+  <p class="hero-sub">
+    Metro bundler optimization, FlatList vs ScrollView decisions, Expo vs bare workflow guidance,
+    and React Navigation patterns — all wired into your AI assistant.
+  </p>
+
+  <div class="install-box">
+    <span class="step">1</span>
+    <code>/plugin marketplace add petro-nazarenko/mobile-skills</code>
+    <span class="sep">|</span>
+    <span class="step">2</span>
+    <code>/plugin install react-native-best-practices@mobile-skills</code>
+  </div>
+
+  <div class="hero-actions">
+    <a class="btn btn-primary" href="#install">Get started</a>
+    <a class="btn btn-secondary" href="https://github.com/petro-nazarenko/mobile-skills">View on GitHub</a>
+  </div>
+</div>
+
+<main>
+
+  <!-- WHAT IT COVERS -->
+  <section id="covers">
+    <h2>What it covers</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">&#9889;</div>
+        <h3>Metro Bundler</h3>
+        <p>Cold-start fixes, cache tuning, bundle size reduction, and custom transformer setup.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128247;</div>
+        <h3>FlatList / ScrollView</h3>
+        <p>Decision matrix, <code>getItemLayout</code>, window size tuning, and FlashList upgrade path.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128230;</div>
+        <h3>Expo vs Bare</h3>
+        <p>Workflow spectrum, CNG, EAS Build, OTA updates, and managed → bare migration steps.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128506;</div>
+        <h3>React Navigation</h3>
+        <p>Stack, Tab, and Drawer patterns, deep linking, Android back-button handling, and performance.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128241;</div>
+        <h3>Platform-specific code</h3>
+        <p>Platform.OS usage audit, .ios.js/.android.js splits, and platform extension best practices.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128269;</div>
+        <h3>Codebase audit</h3>
+        <p>Automated grep patterns to detect common RN anti-patterns across your entire project.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- USE CASES -->
+  <section id="use-cases">
+    <h2>Example use cases</h2>
+
+    <div class="use-case">
+      <div class="use-case-header">
+        <div class="use-case-icon">&#9889;</div>
+        <div>
+          <h3>Fix slow Metro cold start</h3>
+          <div class="trigger">Triggers: metro, bundler, slow start, bundle size</div>
+        </div>
+      </div>
+      <pre>/react-native-best-practices
+My app takes 40s to cold start in Metro. How do I fix it?</pre>
+    </div>
+
+    <div class="use-case">
+      <div class="use-case-header">
+        <div class="use-case-icon">&#128247;</div>
+        <div>
+          <h3>Laggy list of 500 items</h3>
+          <div class="trigger">Triggers: FlatList, ScrollView, list, laggy, slow scroll</div>
+        </div>
+      </div>
+      <pre>/react-native-best-practices
+My list of 500 items is laggy on Android. Should I use FlatList or ScrollView?</pre>
+    </div>
+
+    <div class="use-case">
+      <div class="use-case-header">
+        <div class="use-case-icon">&#128230;</div>
+        <div>
+          <h3>Expo vs bare for production</h3>
+          <div class="trigger">Triggers: expo, eject, bare workflow, native module</div>
+        </div>
+      </div>
+      <pre>/react-native-best-practices
+We need push notifications and a custom Bluetooth module. Should we stay on Expo or eject?</pre>
+    </div>
+
+    <div class="use-case">
+      <div class="use-case-header">
+        <div class="use-case-icon">&#128506;</div>
+        <div>
+          <h3>Android back-button navigation bug</h3>
+          <div class="trigger">Triggers: React Navigation, stack, tab, back button, navigator</div>
+        </div>
+      </div>
+      <pre>/react-native-best-practices
+Tab bar with nested stack navigators — back button behaves wrong on Android. What's the correct pattern?</pre>
+    </div>
+
+    <div class="use-case">
+      <div class="use-case-header">
+        <div class="use-case-icon">&#128241;</div>
+        <div>
+          <h3>Platform-specific code audit</h3>
+          <div class="trigger">Triggers: Platform.OS, .ios.js, .android.js, platform split</div>
+        </div>
+      </div>
+      <pre>/react-native-best-practices
+Audit my codebase for Platform.OS usage and recommend .ios.js/.android.js splits.</pre>
+    </div>
+
+    <div class="use-case">
+      <div class="use-case-header">
+        <div class="use-case-icon">&#128230;</div>
+        <div>
+          <h3>Reduce 18 MB production bundle</h3>
+          <div class="trigger">Triggers: bundle size, tree shaking, metro config, production</div>
+        </div>
+      </div>
+      <pre>/react-native-best-practices
+Our production bundle is 18 MB. Walk me through reducing it with Metro config and tree shaking.</pre>
+    </div>
+
+    <div class="use-case">
+      <div class="use-case-header">
+        <div class="use-case-icon">&#128269;</div>
+        <div>
+          <h3>New project architecture</h3>
+          <div class="trigger">Triggers: new project, setup, stack, architecture, React Native</div>
+        </div>
+      </div>
+      <pre>/react-native-best-practices
+Starting a new RN app targeting iOS and Android with offline support. Recommend the stack and navigation structure.</pre>
+    </div>
+
+  </section>
+
+  <!-- DECISION TABLES -->
+  <section>
+    <h2>Quick decision tables</h2>
+
+    <h3>FlatList vs ScrollView</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Condition</th><th>Use</th></tr></thead>
+        <tbody>
+          <tr><td>&lt; 20 static items</td><td>ScrollView</td></tr>
+          <tr><td>&ge; 20 items</td><td>FlatList</td></tr>
+          <tr><td>Unknown / dynamic count</td><td>FlatList</td></tr>
+          <tr><td>Infinite scroll / pagination</td><td>FlatList</td></tr>
+          <tr><td>Grid layout</td><td>FlatList with numColumns</td></tr>
+          <tr><td>&gt; 50 items, complex renderers</td><td>FlashList (Shopify)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Expo workflow</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Scenario</th><th>Recommended</th></tr></thead>
+        <tbody>
+          <tr><td>Prototype / MVP</td><td>Expo Go</td></tr>
+          <tr><td>Standard app, no custom native</td><td>Expo Managed</td></tr>
+          <tr><td>Need specific native module</td><td>Expo Bare (via prebuild)</td></tr>
+          <tr><td>Full native control</td><td>Bare React Native</td></tr>
+          <tr><td>Team has no iOS/Android experience</td><td>Expo Managed + EAS Build</td></tr>
+          <tr><td>OTA updates required</td><td>Expo (expo-updates)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- INSTALL -->
+  <section id="install">
+    <h2>Installation</h2>
+    <div class="steps">
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Add the marketplace</strong>
+          <p>Register the mobile-skills marketplace in Claude Code.</p>
+          <pre>/plugin marketplace add petro-nazarenko/mobile-skills</pre>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Install the plugin</strong>
+          <p>Install the react-native-best-practices plugin from the marketplace.</p>
+          <pre>/plugin install react-native-best-practices@mobile-skills</pre>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Use the skill</strong>
+          <p>Run the skill with any React Native question or a description of your problem.</p>
+          <pre>/react-native-best-practices [your question or problem]</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- META -->
+  <section>
+    <h2>Plugin info</h2>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr><td>Name</td><td>react-native-best-practices</td></tr>
+          <tr><td>Marketplace</td><td>mobile-skills</td></tr>
+          <tr><td>Version</td><td>1.0.0</td></tr>
+          <tr><td>Author</td><td>Petro Nazarenko</td></tr>
+          <tr><td>License</td><td>MIT</td></tr>
+          <tr><td>Category</td><td>mobile</td></tr>
+          <tr><td>Repository</td><td><a href="https://github.com/petro-nazarenko/mobile-skills">petro-nazarenko/mobile-skills</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>
+    Built by <a href="https://github.com/petro-nazarenko">Petro Nazarenko</a> &bull;
+    <a href="https://github.com/petro-nazarenko/mobile-skills">GitHub</a> &bull;
+    MIT License
+  </p>
+</footer>
+
+</body>
+</html>

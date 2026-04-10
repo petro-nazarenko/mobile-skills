@@ -6,7 +6,7 @@
     "name": "Petro Nazarenko",
     "email": "petro@claudemarketplaces.com"
   },
-  "homepage": "https://github.com/petro-nazarenko/mobile-skills",
+  "homepage": "https://petro-nazarenko.github.io/mobile-skills",
   "repository": "https://github.com/petro-nazarenko/mobile-skills",
   "license": "MIT",
   "keywords": ["react-native", "expo", "metro", "performance", "navigation", "mobile", "flatlist", "bundler"]
