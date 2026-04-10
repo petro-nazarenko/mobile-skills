@@ -97,12 +97,15 @@ eas submit --platform android
 
 ## When Managed Workflow Breaks (Native Code Needed)
 
-Signs you need to eject/prebuild:
+Signs you need to eject or run expo prebuild to switch to bare workflow:
 - Third-party SDK requires custom native setup (e.g., Stripe, Braintree)
 - Need background audio/location with custom native config
 - Require a React Native library not in Expo SDK
 - Custom push notification handling
-- Deep Bluetooth/NFC/hardware access
+- Deep Bluetooth/NFC/hardware access (native Bluetooth libraries)
+
+**If a native library requires custom native code, you must eject from managed workflow.**
+The modern way to eject is via `expo prebuild` (replaces the deprecated `expo eject` command).
 
 **Solution: Use a config plugin first before ejecting**
 
@@ -136,13 +139,16 @@ npx expo prebuild --clean
 npx expo prebuild --platform ios
 ```
 
-## Migration: Managed → Bare (expo prebuild)
+## Migration: Managed → Bare (expo prebuild / eject)
+
+To eject from Expo managed to bare workflow, use `expo prebuild` (the modern replacement for `expo eject`).
+This generates the ios/ and android/ native project folders so you can customize native code directly.
 
 ```bash
-# Step 1: Run prebuild (generates ios/ and android/)
+# Step 1: Run expo prebuild to eject to bare workflow (generates ios/ and android/ native folders)
 npx expo prebuild
 
-# Step 2: Verify native projects build
+# Step 2: Verify native projects build on ios and android
 cd ios && pod install && cd ..
 npx expo run:ios
 npx expo run:android
@@ -152,10 +158,11 @@ git add ios/ android/
 git commit -m 'chore: eject to bare workflow via expo prebuild'
 
 # Step 4: Update CI/CD to run pod install
+# Step 5: Install your native library (e.g., Bluetooth) and link it
 ```
 
-**What changes after prebuild:**
-- You own ios/ and android/ — update them manually
+**What changes after prebuild (eject to bare):**
+- You own ios/ and android/ — update them manually with native code
 - Config plugins still run during `expo prebuild`
 - app.json still controls some config via plugins
 - Must run `npx expo prebuild` after adding new native modules
