@@ -1,0 +1,102 @@
+[
+  {
+    "id": "tc-001",
+    "prompt": "My React Native Metro bundler is slow and the bundle is huge. How do I optimize metro.config.js to speed up builds and reduce bundle size?",
+    "expected_triggers": ["skill: react-native-best-practices"],
+    "assertions": [
+      "metro.config",
+      "inlineRequires",
+      "bundle"
+    ]
+  },
+  {
+    "id": "tc-002",
+    "prompt": "My React Native FlatList is very slow when rendering 500 items. Users see blank spaces while scrolling. How do I fix the performance?",
+    "expected_triggers": ["skill: react-native-best-practices"],
+    "assertions": [
+      "FlatList",
+      "windowSize\\|maxToRenderPerBatch\\|getItemLayout",
+      "removeClippedSubviews\\|FlashList"
+    ]
+  },
+  {
+    "id": "tc-003",
+    "prompt": "Audit my React Native codebase for Platform.OS usage. I think we have inconsistent platform-specific code that could cause bugs on Android.",
+    "expected_triggers": ["skill: react-native-best-practices"],
+    "assertions": [
+      "Platform\\.OS\\|Platform\\.select",
+      "elevation\\|shadow",
+      "grep\\|audit"
+    ]
+  },
+  {
+    "id": "tc-004",
+    "prompt": "Should I use Expo managed workflow or bare React Native for my new production app? We need push notifications and a Stripe payment integration.",
+    "expected_triggers": ["skill: react-native-best-practices"],
+    "assertions": [
+      "Expo\\|bare",
+      "EAS\\|prebuild\\|plugin",
+      "managed\\|workflow"
+    ]
+  },
+  {
+    "id": "tc-005",
+    "prompt": "How do I set up deep linking in React Navigation so that myapp://profile/123 opens the Profile screen with userId 123?",
+    "expected_triggers": ["skill: react-native-best-practices"],
+    "assertions": [
+      "deep link\\|linking",
+      "prefixes\\|config\\|screens",
+      "navigate\\|NavigationContainer"
+    ]
+  },
+  {
+    "id": "tc-006",
+    "prompt": "I have a ScrollView with 200 items and the app is laggy. How do I migrate it to FlatList?",
+    "expected_triggers": ["skill: react-native-best-practices"],
+    "assertions": [
+      "FlatList",
+      "keyExtractor",
+      "renderItem\\|getItemLayout"
+    ]
+  },
+  {
+    "id": "tc-007",
+    "prompt": "My Metro bundler can't resolve modules from a shared package in my monorepo. Symlinks aren't working. How do I fix the Metro config?",
+    "expected_triggers": ["skill: react-native-best-practices"],
+    "assertions": [
+      "monorepo\\|symlink\\|watchFolders",
+      "nodeModulesPaths\\|unstable_enableSymlinks",
+      "metro.config"
+    ]
+  },
+  {
+    "id": "tc-008",
+    "prompt": "What's the difference between NativeStack and Stack in React Navigation? Which one should I use for my app?",
+    "expected_triggers": ["skill: react-native-best-practices"],
+    "assertions": [
+      "NativeStack\\|native-stack",
+      "performance\\|animation\\|native",
+      "createNativeStackNavigator"
+    ]
+  },
+  {
+    "id": "tc-009",
+    "prompt": "I'm using Expo managed workflow but need to add a native Bluetooth library that requires custom native code. How do I migrate to bare workflow?",
+    "expected_triggers": ["skill: react-native-best-practices"],
+    "assertions": [
+      "prebuild\\|expo prebuild",
+      "bare\\|eject",
+      "ios\\|android\\|native"
+    ]
+  },
+  {
+    "id": "tc-010",
+    "prompt": "How do I implement getItemLayout for a FlatList where each item has a fixed height of 72dp and there's a 1dp separator between items?",
+    "expected_triggers": ["skill: react-native-best-practices"],
+    "assertions": [
+      "getItemLayout",
+      "length.*72\\|72.*length\\|ITEM_HEIGHT\\|offset",
+      "separator\\|index"
+    ]
+  }
+]
