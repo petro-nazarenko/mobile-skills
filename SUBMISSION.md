@@ -35,7 +35,7 @@ Petro Nazarenko
 
 **Email**
 ```
-petro@claudemarketplaces.com
+petrnzrnk@gmail.com
 ```
 
 **License**
@@ -94,7 +94,7 @@ https://petro-nazarenko.github.io/mobile-skills/privacy.html
 
 **Email address**
 ```
-petro@claudemarketplaces.com
+petrnzrnk@gmail.com
 ```
 
 ---

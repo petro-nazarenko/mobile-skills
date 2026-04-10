@@ -2,7 +2,7 @@
   "name": "mobile-skills",
   "owner": {
     "name": "Petro Nazarenko",
-    "email": "petro@claudemarketplaces.com"
+    "email": "petrnzrnk@gmail.com"
   },
   "metadata": {
     "description": "React Native best practices skill for Claude Code — Metro bundler, FlatList/ScrollView, Expo vs bare, React Navigation",
@@ -16,7 +16,7 @@
       "version": "1.0.0",
       "author": {
         "name": "Petro Nazarenko",
-        "email": "petro@claudemarketplaces.com"
+        "email": "petrnzrnk@gmail.com"
       },
       "homepage": "https://petro-nazarenko.github.io/mobile-skills",
       "repository": "https://github.com/petro-nazarenko/mobile-skills",
