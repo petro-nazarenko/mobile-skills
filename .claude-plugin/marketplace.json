@@ -11,7 +11,7 @@
   "plugins": [
     {
       "name": "react-native-best-practices",
-      "source": "./skills/react-native-best-practices",
+      "source": ".",
       "description": "React Native performance, Metro bundler optimization, FlatList/ScrollView guidance, Expo vs bare workflow decision matrix, and React Navigation patterns for Claude Code.",
       "version": "1.0.0",
       "author": {

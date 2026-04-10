@@ -61,12 +61,41 @@
 
 ## getItemLayout Implementation
 
+When each item has a fixed height and a separator, use getItemLayout for optimal performance.
+The `length` is the item height, `offset` is the cumulative position, and `index` is the item index.
+If you have a separator between items, add the separator height to the offset calculation.
+
 ```tsx
+// Example: items with fixed height of 72dp and a 1dp separator between items
+const ITEM_HEIGHT = 72;
+const SEPARATOR_HEIGHT = 1;
+const ITEM_TOTAL = ITEM_HEIGHT + SEPARATOR_HEIGHT; // length 72 + separator 1 = 73
+
+const getItemLayout = useCallback(
+  (_: unknown, index: number) => ({
+    length: ITEM_HEIGHT,          // each item has length 72
+    offset: ITEM_TOTAL * index,   // offset accounts for separator between items
+    index,                        // the item index
+  }),
+  []
+);
+
+// With ItemSeparatorComponent:
+<FlatList
+  data={items}
+  keyExtractor={(item) => item.id}
+  renderItem={renderItem}
+  getItemLayout={getItemLayout}
+  ItemSeparatorComponent={() => <View style={{ height: SEPARATOR_HEIGHT }} />}
+/>
+```
+
+```tsx
+// Generic pattern for any fixed-height items:
 const ITEM_HEIGHT = 80;
 const SEPARATOR_HEIGHT = 1;
 const ITEM_TOTAL = ITEM_HEIGHT + SEPARATOR_HEIGHT;
 
-// For uniform height items:
 const getItemLayout = useCallback(
   (_: unknown, index: number) => ({
     length: ITEM_TOTAL,
@@ -75,7 +104,9 @@ const getItemLayout = useCallback(
   }),
   []
 );
+```
 
+```tsx
 // For variable height — use a pre-measured layout map:
 const heightMap = useRef<Record<string, number>>({});
 // Then measure each item's onLayout and store by id
